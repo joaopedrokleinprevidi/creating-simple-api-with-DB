@@ -1,7 +1,13 @@
-const express = require("express");
-const app = express();
+const app = require("./app");
+require("dotenv").config();
 
-//Rodando servidor na porta 8080
-app.listen("8080", (response) => {
-  console.log(`Rodando com sucesso na porta: http://localhost:8080`);
+const server = process.env.SERVER_PORT || 3333;
+
+//Rodando servidor na porta 3333
+app.listen(server, () => {
+  try {
+    console.log(`Rodando com sucesso na porta: http://localhost:${server}`);
+  } catch {
+    console.log("server failed");
+  }
 });
