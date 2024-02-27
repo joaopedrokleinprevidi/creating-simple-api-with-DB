@@ -1,0 +1,113 @@
+@charset "UTF-8";
+
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  background-color: hsl(195, 100%, 73%);
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+header > div {
+  padding: 2rem;
+}
+
+form {
+  display: flex;
+}
+
+form > label {
+  margin-bottom: 0.2rem;
+}
+
+form > button {
+  padding: 0.3rem;
+  margin: 1rem;
+}
+
+.div-principal-inputs {
+  max-width: 400px;
+}
+
+input {
+  width: 100%;
+  flex: 1;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 800px;
+  background-color: #fff;
+}
+
+td,
+th {
+  padding: 10px 15px;
+  border: 1px solid #bbb;
+  text-align: center;
+}
+
+td {
+  color: #333;
+  font-weight: 500;
+}
+
+tr:nth-child(even) {
+  /* Aplica efeito de coloração em um sim um não */
+  background-color: #f5f5f5;
+}
+
+.btn-action {
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn-action:nth-child(1) {
+  background-color: orange;
+  margin: 5px;
+}
+
+.btn-action:nth-child(2) {
+  background-color: orange;
+  margin-right: rgba(237, 42, 42, 0.9);
+}
+
+.danger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: red;
+  font-size: 1.5rem;
+  text-shadow: 1px 1px 1px white;
+}
+
+.warn {
+  font-size: 1.1rem;
+  text-shadow: 1px 1px 1px white;
+}
+
+.cadastros > div {
+  margin-top: 1rem;
+  margin-bottom: 4rem;
+}

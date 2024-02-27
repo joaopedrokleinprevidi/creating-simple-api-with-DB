@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <script src="src/script/script.js" defer></script>
+    <link rel="stylesheet" href="./src/styles/styles.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+
+    <header>
+        <div class="flex">
+            <h1>Register</h1>
+            <h2>Criação de API completa </h2>
+        </div>
+    </header>
+
+    <main>
+        <form class="flex">
+
+            <div class="div-principal-inputs">
+                <label for="login">Login</label>
+                <input type="text" name="login" id="login" placeholder="usuario">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="senha" placeholder="*****">
+            </div>
+            <button type="submit" id="registerUser">Register</button>
+        </form>
+
+        <section class="cadastros flex">
+            <div class="flex warn">
+                <span>
+                    <p class="danger">DANGER: </p>
+                    <p class="warn">DELETE ALL USERS or UPDATE ALL USERS</p>
+                </span>
+                <div>
+                    <button class="btn-action">
+                        <span class="material-symbols-outlined"> edit </span>
+                    </button>
+                    <button class="btn-action">
+                        <span class="material-symbols-outlined">delete</span>
+                    </button>
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Login</th>
+                        <th>Password</th>
+                        <td>Options</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <TD>1</TD>
+                        <td>usuario1234</td>
+                        <td>senha9876</td>
+                        <td>
+                            <button class="btn-action">
+                                <span class="material-symbols-outlined"> edit </span>
+                            </button>
+                            <button class="btn-action">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </section>
+    </main>
+
+</body>
+
+</html>
