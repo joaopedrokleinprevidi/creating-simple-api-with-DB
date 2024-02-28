@@ -81,16 +81,21 @@ tr:nth-child(even) {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  margin: 3px;
 }
 
 .btn-action:nth-child(1) {
   background-color: orange;
-  margin: 5px;
 }
 
 .btn-action:nth-child(2) {
   background-color: orange;
-  margin-right: rgba(237, 42, 42, 0.9);
+  outline: 1px solid rgba(237, 42, 42, 0.9);
+}
+
+.btn-action:nth-child(3) {
+  background-color: lightgreen;
+  outline: 1px solid green;
 }
 
 .danger {
@@ -110,4 +115,11 @@ tr:nth-child(even) {
 .cadastros > div {
   margin-top: 1rem;
   margin-bottom: 4rem;
+}
+
+#errorContainer {
+  color: red;
+  font-size: 1rem;
+  text-shadow: 1px 1px 1px white;
+  margin-bottom: 0.4rem;
 }

@@ -1,34 +1,30 @@
 const validateLogin = (request, response, next) => {
   const { body } = request;
 
+  let errorMessage = "";
+
   if (body.login === undefined) {
-    return response
-      .status(400)
-      .json({ errorMessage: 'O campo "login" deve conter algum conteúdo. ' });
+    errorMessage = 'O campo "login" deve conter algum conteúdo. ';
   }
 
   if (body.login === "") {
-    return response
-      .status(400)
-      .json({ errorMessage: 'O campo "login" não pode ser vazio. ' });
+    errorMessage = 'O campo "login" não pode ser vazio. ';
   }
 
   if (body.login.length >= 15) {
-    return response.status(400).json({
-      errorMessage: 'O campo "login" deve ter menos de 15 caracteres.',
-    });
+    errorMessage = 'O campo "login" deve ter menos de 15 caracteres.';
   }
 
   if (body.login.length <= 3) {
-    return response.status(400).json({
-      errorMessage: 'O campo "login" deve ter no mínimo 4 caracteres. ',
-    });
+    errorMessage = 'O campo "login" deve ter no mínimo 4 caracteres. ';
   }
 
   if (body.login.includes(" ")) {
-    return response
-      .status(400)
-      .json({ errorMessage: 'O campo "login" não pode ter espaçamentos.' });
+    errorMessage = 'O campo "login" não pode ter espaçamentos.';
+  }
+
+  if (!errorMessage == "") {
+    return response.status(400).json({ errorMessage });
   }
 
   next();

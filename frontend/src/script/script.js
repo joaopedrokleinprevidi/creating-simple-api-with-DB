@@ -2,6 +2,7 @@ const tbody = document.querySelector("tbody");
 const loginUser = document.querySelector("#login");
 const passwordUser = document.querySelector("#senha");
 const buttonRegisterUser = document.querySelector("#registerUser");
+const errorContainer = document.querySelector("#errorContainer");
 
 const endpoint = "http://localhost:3333/usuarios";
 
@@ -33,17 +34,36 @@ const newUser = async (event) => {
   passwordUser.value = "";
 };
 
-const updateUser = async (user) => {
-  const { id, login, senha } = user;
-
+const updateUser = async ({ id, login, senha }) => {
   await fetch(`${endpoint}/${id}`, {
     method: "put",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(login, senha),
-  });
+    body: JSON.stringify({ login, senha }),
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        const errorResponse = await response.json();
+        throw new Error(errorResponse.errorMessage || "Erro desconhecido");
+      }
+    })
+    .catch((error) => {
+      console.error("Erro ao realizar a requisição: ", error.message);
+      showErrorForUserCausedByMiddlewares(error.message);
+    });
 
   loadAllUsers();
 };
+
+function showErrorForUserCausedByMiddlewares(error) {
+  const content = errorContainer.innerHTML;
+  errorContainer.innerHTML = `${content} <h1>Erro: ${error} </h1>`;
+
+  setTimeout(() => {
+    errorContainer.innerHTML = "";
+  }, 15000);
+}
 
 const createElement = (tag, innerText = "", innerHTML = "") => {
   const element = document.createElement(tag);
@@ -79,37 +99,44 @@ const createRow = (user) => {
     ' <span class="material-symbols-outlined">delete</span>'
   );
 
+  const okButton = createElement(
+    "button",
+    "",
+    '<span class="material-symbols-outlined">check</span>'
+  );
+
   editButton.classList.add("btn-action");
   deleteButton.classList.add("btn-action");
+  okButton.classList.add("btn-action");
 
-  const sectionForms = createElement("section");
   const editFormLogin = createElement("form");
   const editFormPassword = createElement("form");
 
   const editInputLogin = createElement("input");
   const editInputPassword = createElement("input");
 
-  const checkButtonOptions = createElement("button");
-
   editInputLogin.value = login;
   editInputPassword.value = senha;
 
-  sectionForms.append(editFormLogin, editFormPassword);
   editFormLogin.append(editInputLogin);
   editFormPassword.append(editInputPassword);
-
-  sectionForms.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    updateUser({ id, login: loginUser.value, senha: passwordUser.value });
-  });
 
   editButton.addEventListener("click", () => {
     tdLogin.innerText = "";
     tdSenha.innerText = "";
     tdLogin.append(editFormLogin);
     tdSenha.append(editFormPassword);
-    tdOptions.append(checkButtonOptions);
+    tdOptions.append(okButton);
+  });
+
+  okButton.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    updateUser({
+      id,
+      login: editInputLogin.value,
+      senha: editInputPassword.value,
+    });
   });
 
   tdOptions.append(editButton, deleteButton);
