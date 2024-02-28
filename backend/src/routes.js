@@ -28,6 +28,11 @@ router.put(
   usersController.updateUser
 );
 
-router.put("/usuarios", usersController.updateAllUsers);
+router.put(
+  "/usuarios",
+  usersMiddlewares.validateLogin,
+  usersMiddlewares.validatePassword,
+  usersController.updateAllUsers
+);
 
 module.exports = router;

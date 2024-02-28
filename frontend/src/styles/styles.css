@@ -123,3 +123,7 @@ tr:nth-child(even) {
   text-shadow: 1px 1px 1px white;
   margin-bottom: 0.4rem;
 }
+
+.spacing {
+  margin: 3px;
+}

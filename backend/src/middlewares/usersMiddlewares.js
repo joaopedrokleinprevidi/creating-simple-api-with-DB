@@ -33,40 +33,34 @@ const validateLogin = (request, response, next) => {
 const validatePassword = (request, response, next) => {
   const { body } = request;
 
+  let errorMessage = "";
+
   if (body.senha == undefined) {
-    return response
-      .status(400)
-      .json({ errorMessage: 'O campo "senha" deve conter algum conteúdo. ' });
+    errorMessage = 'O campo "senha" deve conter algum conteúdo. ';
   }
 
   if (body.senha == "") {
-    return response
-      .status(400)
-      .json({ errorMessage: 'O campo "senha" não pode ser vazio. ' });
+    errorMessage = 'O campo "senha" não pode ser vazio. ';
   }
 
   if (body.senha.includes(" ")) {
-    return response
-      .status(400)
-      .json({ errorMessage: 'O campo "senha" não pode conter espaçamentos. ' });
+    errorMessage = 'O campo "senha" não pode conter espaçamentos. ';
   }
 
   if (body.senha.length >= 15) {
-    return response.status(400).json({
-      errorMessage: 'O campo "senha" deve ter menos de 15 caracteres.',
-    });
+    errorMessage = 'O campo "senha" deve ter menos de 15 caracteres.';
   }
 
   if (!/\d.*\d|\d.*\d/.test(body.senha)) {
-    return response.status(400).json({
-      errorMessage: 'O campo "senha" deve conter pelo menos dois números. ',
-    });
+    errorMessage = 'O campo "senha" deve conter pelo menos dois números. ';
   }
 
   if (body.senha.length <= 3) {
-    return response.status(400).json({
-      errorMessage: 'O campo "senha" deve ter no mínimo 4 caracteres.',
-    });
+    errorMessage = 'O campo "senha" deve ter no mínimo 4 caracteres.';
+  }
+
+  if (!errorMessage == "") {
+    return response.status(400).json({ errorMessage });
   }
 
   next();
