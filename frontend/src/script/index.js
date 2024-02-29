@@ -30,7 +30,19 @@ const newUser = async (event) => {
     method: "post",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(user),
-  });
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        return;
+      } else {
+        const errorResponse = await response.json();
+        throw new Error(errorResponse.errorMessage || "Erro desconhecido");
+      }
+    })
+    .catch((error) => {
+      console.error("Erro ao solicitar a requisição: ", error.message);
+      showErrorForUserCausedByMiddlewares(error.message);
+    });
 
   loadAllUsers();
   loginUser.value = "";
@@ -45,7 +57,7 @@ const updateUser = async ({ id, login, senha }) => {
   })
     .then(async (response) => {
       if (response.ok) {
-        return response.json();
+        return;
       } else {
         const errorResponse = await response.json();
         throw new Error(errorResponse.errorMessage || "Erro desconhecido");
@@ -67,9 +79,10 @@ const updateAllUsers = async ({ login, senha }) => {
   })
     .then(async (response) => {
       if (response.ok) {
-        return response.json();
+        return;
       } else {
         const errorResponse = await response.json();
+        console.log(errorResponse);
         throw new Error(errorResponse.errorMessage || "Erro desconhecido");
       }
     })
@@ -104,6 +117,17 @@ function showErrorForUserCausedByMiddlewares(error) {
     errorContainer.innerHTML = "";
   }, 3500);
 }
+
+const loadAllUsers = async () => {
+  const users = await fetchUsers();
+
+  tbody.innerHTML = "";
+
+  users.forEach((user) => {
+    const tr = createRow(user);
+    tbody.append(tr);
+  });
+};
 
 const createElement = (tag, innerText = "", innerHTML = "") => {
   const element = document.createElement(tag);
@@ -188,34 +212,27 @@ const createRow = (user) => {
   return tr;
 };
 
-const loadAllUsers = async () => {
-  const users = await fetchUsers();
-
-  tbody.innerHTML = "";
-
-  users.forEach((user) => {
-    const tr = createRow(user);
-    tbody.append(tr);
-  });
-};
-
 buttonRegisterUser.addEventListener("click", newUser);
 buttonDeleteAllUsers.addEventListener("click", deleteAllUsers);
 buttonEditAllUsers.addEventListener("click", () => {
   const form = createElement("form");
-  const inputLogin = createElement("input");
-  const inputPassword = createElement("input");
-  const buttonOK = createElement("button", "OK");
-  inputLogin.placeholder = "Login";
-  inputPassword.placeholder = "Password";
-  inputLogin.classList.add("spacing");
-  inputPassword.classList.add("spacing");
-  form.append(inputLogin, inputPassword, buttonOK);
-  dangerContainer.append(form);
+  form.classList.add("formCounter");
+  const quantityForm = document.querySelectorAll(".formCounter");
 
-  buttonOK.addEventListener("click", () => {
-    updateAllUsers({ login: inputLogin.value, senha: inputPassword.value });
-  });
+  if (quantityForm.length == 0) {
+    const inputLogin = createElement("input");
+    const inputPassword = createElement("input");
+    const buttonOK = createElement("button", "OK");
+    inputLogin.placeholder = "Login";
+    inputPassword.placeholder = "Password";
+    inputLogin.classList.add("spacing");
+    inputPassword.classList.add("spacing");
+    form.append(inputLogin, inputPassword, buttonOK);
+    dangerContainer.append(form);
+    buttonOK.addEventListener("click", () => {
+      updateAllUsers({ login: inputLogin.value, senha: inputPassword.value });
+    });
+  }
 });
 
 loadAllUsers();
