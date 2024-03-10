@@ -19,7 +19,7 @@ const newUser = async (user) => {
   const [newUser] = await connection.execute(query, [login, senha]);
   return newUser;
 };
-
+/* */
 const deleteUser = async (id) => {
   const query = "DELETE FROM usuarios WHERE id = ?";
   const deletedUser = connection.execute(query, [id]);
